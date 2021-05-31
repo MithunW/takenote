@@ -5,7 +5,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { ReactMouseEvent } from '@/types'
 import 'regenerator-runtime/runtime.js'
 
-const VoiceRecognition = ({ speechDataCallback } : { speechDataCallback: any}) => {
+const VoiceRecognition = ({ speechDataCallback }: { speechDataCallback: any }) => {
   const { transcript, resetTranscript } = useSpeechRecognition()
 
   const [state, setState] = useState(false)
@@ -15,33 +15,35 @@ const VoiceRecognition = ({ speechDataCallback } : { speechDataCallback: any}) =
   }
 
   return (
-    <div className="dictaphone">
-      {!state ? (
-        <button
-          className="record-button"
-          onClick={async (event: React.MouseEvent<HTMLButtonElement>) => {
-            setState(true)
-            await SpeechRecognition.startListening({ continuous: true })
-          }}
-        >
-          <Mic size={18} />
-        </button>
-      ) : (
-        <button
-          className="record-button"
-          onClick={async (event: React.MouseEvent<HTMLButtonElement>) => {
-            SpeechRecognition.stopListening()
-            console.log(transcript)
-            speechDataCallback(transcript)
-            resetTranscript()
-            setState(false)
-          }}
-        >
-          <MicOff size={18} />
-        </button>
-      )}
-      <p className="transcript">{transcript}</p>
-    </div>
+    <section className="note-menu-bar voicerec">
+      <nav>
+        {!state ? (
+          <button
+            className="note-menu-bar-button"
+            onClick={async (event: React.MouseEvent<HTMLButtonElement>) => {
+              setState(true)
+              await SpeechRecognition.startListening({ continuous: true })
+            }}
+          >
+            <Mic size={18} />
+          </button>
+        ) : (
+          <button
+            className="note-menu-bar-button"
+            onClick={async (event: React.MouseEvent<HTMLButtonElement>) => {
+              SpeechRecognition.stopListening()
+              console.log(transcript)
+              speechDataCallback(transcript)
+              resetTranscript()
+              setState(false)
+            }}
+          >
+            <MicOff size={18} />
+          </button>
+        )}
+        <p className="transcript">{transcript}</p>
+      </nav>
+    </section>
   )
 }
 export default VoiceRecognition
