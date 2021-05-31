@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Mic, MicOff } from 'react-feather'
+import { Mic, MicOff, X } from 'react-feather'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 import { ReactMouseEvent } from '@/types'
@@ -41,6 +41,16 @@ const VoiceRecognition = ({ speechDataCallback }: { speechDataCallback: any }) =
             <MicOff size={18} />
           </button>
         )}
+        <button
+          className="note-menu-bar-button"
+          onClick={async (event: React.MouseEvent<HTMLButtonElement>) => {
+            SpeechRecognition.stopListening()
+            resetTranscript()
+            setState(false)
+          }}
+        >
+          <X size={18} />
+        </button>
         <p className="transcript">{transcript}</p>
       </nav>
     </section>
